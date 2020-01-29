@@ -1,0 +1,125 @@
+apply plugin: 'com.android.application'
+
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
+
+android {
+    compileSdkVersion 28
+    defaultConfig {
+        applicationId "com.zaher.base"
+        minSdkVersion 21
+        targetSdkVersion 28
+        versionCode 1
+        versionName "1.0.0"
+        multiDexEnabled true
+        resConfigs "en"
+        ndk {
+            abiFilters "armeabi-v7a", "x86", "arm64-v8a", "x86_64"
+        }
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+    dataBinding {
+        enabled = true
+    }
+    bundle {
+        language { enableSplit = true }
+        density { enableSplit = true }
+        abi { enableSplit = true }
+    }
+    lintOptions {
+        abortOnError false
+        ignoreWarnings true
+        quiet true
+    }
+    packagingOptions {
+        exclude 'META-INF/DEPENDENCIES'
+        exclude 'META-INF/DEPENDENCIES.txt'
+        exclude 'META-INF/dependencies'
+        exclude 'META-INF/dependencies.txt'
+        exclude 'META-INF/LICENSE'
+        exclude 'META-INF/LICENSE.txt'
+        exclude 'META-INF/license'
+        exclude 'META-INF/license.txt'
+        exclude 'META-INF/NOTICE'
+        exclude 'META-INF/NOTICE.txt'
+        exclude 'META-INF/notice'
+        exclude 'META-INF/notice.txt'
+        return void
+    }
+    signingConfigs {
+        if (rootProject.file('signing-debug.properties').exists()) {
+            def signingDebug = new Properties()
+            signingDebug.load(new FileInputStream(rootProject.file('signing-debug.properties')))
+            debug {
+                storeFile rootProject.file(signingDebug.storeFile)
+                storePassword signingDebug.storePassword
+                keyAlias signingDebug.keyAlias
+                keyPassword signingDebug.keyPassword
+            }
+        }
+        if (rootProject.file('signing-release.properties').exists()) {
+            def signingRelease = new Properties()
+            signingRelease.load(new FileInputStream(rootProject.file('signing-release.properties')))
+            release {
+                storeFile rootProject.file(signingRelease.storeFile)
+                storePassword signingRelease.storePassword
+                keyAlias signingRelease.keyAlias
+                keyPassword signingRelease.keyPassword
+            }
+        }
+    }
+    buildTypes {
+        debug {
+            buildConfigField 'String', 'API_SAMPLE', '"https://jsonplaceholder.typicode.com"'
+            buildConfigField 'String', 'API_NEWS', '"https://newsapi.org/v2/"'
+            buildConfigField 'String', 'API_KEY', '"06a57f7c724d48f099db0cb2fe32c5bc"'
+            minifyEnabled false
+            debuggable true
+            applicationIdSuffix ".debug"
+            versionNameSuffix '-dev'
+            signingConfig signingConfigs.debug
+        }
+        release {
+            buildConfigField 'String', 'API_SAMPLE', '"https://jsonplaceholder.typicode.com"'
+            buildConfigField 'String', 'API_NEWS', '"https://newsapi.org/v2/"'
+            buildConfigField 'String', 'API_KEY', '"06a57f7c724d48f099db0cb2fe32c5bc"'
+            minifyEnabled true
+            shrinkResources true
+            zipAlignEnabled true
+            debuggable false
+            jniDebuggable false
+            renderscriptDebuggable false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            android.applicationVariants.all { variant ->
+                variant.outputs.all {
+                    outputFileName = "base-${variant.versionName}.apk"
+                }
+            }
+            signingConfig signingConfigs.release
+        }
+    }
+    testOptions {
+        unitTests.returnDefaultValues = true
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+
+    implementation project(':framework')
+
+    /* android test */
+    implementation 'androidx.appcompat:appcompat:1.1.0'
+    testImplementation 'junit:junit:4.12'
+    testImplementation 'org.jetbrains.kotlinx:kotlinx-coroutines-test:1.1.1'
+    testImplementation 'org.mockito:mockito-core:2.24.0'
+    testImplementation 'org.mockito:mockito-inline:2.24.0'
+
+    androidTestImplementation 'androidx.test:core:1.1.0'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.0'
+    androidTestImplementation 'androidx.test:runner:1.1.1'
+    androidTestImplementation 'androidx.test:rules:1.1.1'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.1'
+    implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
+}

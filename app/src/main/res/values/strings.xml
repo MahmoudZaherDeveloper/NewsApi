@@ -1,0 +1,17 @@
+<resources>
+    <string name="app_name">News</string>
+    <string name="app_msg_close">Press Back button again to exit</string>
+    <string name="app_msg_test">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
+        incididunt ut labore et dolore magna aliqua
+    </string>
+
+    <string name="error_title">Oops, Something went wrong</string>
+    <string name="error_msg">Check your connection and try again</string>
+
+    <string name="empty_title">Oops, No News yet</string>
+    <string name="empty_msg">Try again later</string>
+
+    <!--Main-->
+    <string name="main_title">News App</string>
+    <string name="main_filter">Filter</string>
+</resources>

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+        <import type="android.view.View"/>
+
+        <variable
+                name="view"
+                type="com.zaher.base.presentation.splashscreen.SplashScreenView"/>
+
+        <variable
+                name="vm"
+                type="com.zaher.base.presentation.splashscreen.SplashScreenViewModel"/>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/colorPrimary">
+
+        <TextView
+                android:text="Welcom ^_^ Youxel Task"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/textView4"
+                app:layout_constraintTop_toTopOf="parent" app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintEnd_toEndOf="parent"
+                android:textSize="30sp" android:textColor="#FBFBFB" android:fontFamily="sans-serif-medium"/>
+        <ProgressBar
+                style="?android:attr/progressBarStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/colorWhite"
+                android:shadowColor="@color/colorWhite"
+                android:background="@color/colorWhite"
+                android:id="@+id/progressBar2" app:layout_constraintTop_toBottomOf="@+id/textView4"
+                android:layout_marginTop="32dp" app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
